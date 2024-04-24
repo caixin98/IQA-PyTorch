@@ -18,3 +18,8 @@ yapf
 einops
 imgaug
 openai-clip
+facexlib
+transformers==4.37.2
+accelerate
+icecream
+sentencepiece

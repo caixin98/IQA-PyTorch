@@ -36,13 +36,16 @@ This is a image quality assessment toolbox with **pure python and pytorch**. We 
 ---
 
 ### :triangular_flag_on_post: Updates/Changelog
+- **Mar 11, 2024**. Add `unique`, refer to official repo [here](https://github.com/zwx8981/UNIQUE). Thanks for the contribution from [Weixia Zhang](https://github.com/zwx8981) 🤗.
+- :boom: **Jan 31, 2024**. Add `qalign` for both NR and IAA. It is our most powerful unified metric based on large vision-language models, and shows remarkable performance and robustness. Refer [Q-Align](https://github.com/Q-Future/Q-Align) for more details. Use it with the following codes:
+  ```
+  qalign = create_metric('qalign').cuda()
+  quality_score = qalign(input, task_='quality')
+  aesthetic_score = qalign(input, task_='aesthetic')
+  ```
+- **Jan 19, 2024**. Add `wadiqam_fr` and `wadiqam_nr`. All implemented methods are usable now 🍻. 
 - **Dec 23, 2023**. Add `liqe` and `liqe_mix`. Thanks for the contribution from [Weixia Zhang](https://github.com/zwx8981) 🤗.
 - **Oct 09, 2023**. Add datasets: [PIQ2023](https://github.com/DXOMARK-Research/PIQ2023), [GFIQA](http://database.mmsp-kn.de/gfiqa-20k-database.html). Add metric `topiq_nr-face`. We release example results on FFHQ [here](tests/ffhq_score_topiq_nr-face.csv) for reference. 
-- **Aug 15, 2023**. Add `st-lpips` and `laion_aes`. Refer to official repo at [ShiftTolerant-LPIPS](https://github.com/abhijay9/ShiftTolerant-LPIPS) and [improved-aesthetic-predictor](https://github.com/christophschuhmann/improved-aesthetic-predictor)
-- **Aug 05, 2023**. Add our work [TOPIQ](https://arxiv.org/abs/2308.03060) with remarkable performance on almost all benchmarks via efficient Resnet50 backbone. Use it with `topiq_fr, topiq_nr, topiq_iaa` for Full-Reference, No-Reference and Aesthetic assessment respectively.
-- **March 30, 2023**. Add [URanker](https://github.com/RQ-Wu/UnderwaterRanker) for IQA of under water images. 
-- **March 29, 2023**. :rotating_light: Hot fix of NRQM & PI. 
-- **March 25, 2023**. Add TreS, HyperIQA, CNNIQA, CLIPIQA.
 - [**More**](docs/history_changelog.md)
 
 ---
@@ -160,8 +163,8 @@ Basically, we use the largest existing datasets for training, and cross dataset 
 
 | Metric Type   | Reproduced Models |
 | ------------- | ----------------------------- |
-| FR            |                               |
-| NR            | `cnniqa`, `dbcnn`, `hyperiqa` |
+| FR            | `wadiqam_fr`  |
+| NR            | `cnniqa`, `dbcnn`, `hyperiqa`,  `wadiqam_nr` |
 | Aesthetic IQA | `nima`, `nima-vgg16-ava`      |
 
 **Important Notes:**
@@ -226,7 +229,7 @@ If you find our codes helpful to your research, please consider to use the follo
 }
 ```
 
-Please also consider to cite our new work `TOPIQ` if it is useful to you:
+Please also consider to cite our works on image quality assessment if it is useful to you:
 ```
 @article{chen2023topiq,
   title={TOPIQ: A Top-down Approach from Semantics to Distortions for Image Quality Assessment},
@@ -235,6 +238,16 @@ Please also consider to cite our new work `TOPIQ` if it is useful to you:
   year={2023}
 }
 ``` 
+```
+@article{wu2023qalign,
+  title={Q-Align: Teaching LMMs for Visual Scoring via Discrete Text-Defined Levels},
+  author={Wu, Haoning and Zhang, Zicheng and Zhang, Weixia and Chen, Chaofeng and Li, Chunyi and Liao, Liang and Wang, Annan and Zhang, Erli and Sun, Wenxiu and Yan, Qiong and Min, Xiongkuo and Zhai, Guangtai and Lin, Weisi},
+  journal={arXiv preprint arXiv:2312.17090},
+  year={2023},
+  institution={Nanyang Technological University and Shanghai Jiao Tong University and Sensetime Research},
+  note={Equal Contribution by Wu, Haoning and Zhang, Zicheng. Project Lead by Wu, Haoning. Corresponding Authors: Zhai, Guangtai and Lin, Weisi.}
+}
+```
 
 ## :heart: Acknowledgement
 

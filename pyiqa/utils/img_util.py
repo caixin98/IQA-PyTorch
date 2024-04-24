@@ -14,6 +14,41 @@ def is_image_file(filename):
     return any(filename.lower().endswith(extension) for extension in Image.registered_extensions())
 
 
+def scandir_images(dir, max_dataset_size=float("inf"), followlinks=True):
+    """Get all image files from a directory and return a sorted list of fullpath.
+    """
+    images = []
+    assert os.path.isdir(dir), '%s is not a valid directory' % dir
+
+    for root, _, fnames in sorted(os.walk(dir, followlinks=followlinks)):
+        for fname in fnames:
+            if is_image_file(fname):
+                path = os.path.join(root, fname)
+                images.append(path)
+    return images[:min(max_dataset_size, len(images))]
+
+
+def imread2pil(img_source, rgb=False):
+    """Read image to tensor.
+
+    Args:
+        img_source (str, bytes, or PIL.Image): image filepath string, image contents as a bytearray or a PIL Image instance
+        rgb: convert input to RGB if true
+    """
+    if type(img_source) == bytes:
+        img = Image.open(io.BytesIO(img_source))
+    elif type(img_source) == str:
+        assert is_image_file(img_source), f'{img_source} is not a valid image file.'
+        img = Image.open(img_source)
+    elif isinstance(img_source, Image.Image):
+        img = img_source
+    else:
+        raise Exception("Unsupported source type")
+    if rgb:
+        img = img.convert('RGB')
+    return img
+
+
 def imread2tensor(img_source, rgb=False):
     """Read image to tensor.
 
