@@ -62,6 +62,8 @@ def filter2(input, weight, shape='same'):
     if shape == 'same':
         return imfilter(input, weight, groups=input.shape[1])
     elif shape == 'valid':
+        input = input.to(torch.float32)
+        weight = weight.to(torch.float32)   
         return F.conv2d(input, weight, stride=1, padding=0, groups=input.shape[1])
     else:
         raise NotImplementedError(f'Shape type {shape} is not implemented.')

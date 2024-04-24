@@ -53,10 +53,11 @@ def main():
                 ref_img_path = None
 
             score = iqa_model(img_path, ref_img_path).cpu().item()
+            # print(f'{metric_name} of {img_name}: {score}')
             avg_score += score
             pbar.update(1)
-            pbar.set_description(f'{metric_name} of {img_name}: {score}')
-            pbar.write(f'{metric_name} of {img_name}: {score}')
+            # pbar.set_description(f'{metric_name} of {img_name}: {score}')
+            # pbar.write(f'{metric_name} of {img_name}: {score}')
             if args.save_file:
                 sfwriter.writerow([img_name, score])
             
